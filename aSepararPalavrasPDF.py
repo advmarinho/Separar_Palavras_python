@@ -1,0 +1,105 @@
+import pandas as pd
+from numpy import savetxt
+
+# pyinstaller --onefile --console .\aulaProjetoSplit.py
+
+print('\n\033[1;33mSoftware para separar arquivos de texto em arquivos separados por palavras.\033[m')
+print('\033[1;33mCriar um arquivo com nome texto.txt extraido do site e depois copiar o caminho e colar no input.\033[m')
+print('\n\033[1;32mSoftware by Anderson Marinho \033[m')
+print('\033[1;32mVersão 1.0 \033[m')
+print('\n')
+
+# # arq = open('texto.txt', 'r', encoding="utf-8" )
+# # abrir = input('\033[1;31mDigite caminho do arquivo: \033[m')
+# arq = open('Aula_294_Texto', 'r', encoding="utf-8" )
+# string = arq.read()
+# lista0 = string.split(' ')  # split em palavras
+# # lista0 = set(string.split(' '))  # split em palavras
+# lista1 = (dict.fromkeys(string.split(' ')))  # split em palavras
+# # print(lista1)
+
+# palavras = []
+# for valor in lista1:
+#     valor = valor.replace(',','')
+#     valor = valor.replace('.','')
+#     valor = valor.replace(':','')
+#     valor = valor.replace(';','')
+#     valor = valor.replace('—','')
+#     valor = valor.replace(' ','')
+#     valor = valor.replace('?','')
+#     valor = valor.replace('!','')
+#     valor = valor.replace('“','')
+#     valor = valor.replace('–','')
+#     valor = valor.replace('“‘','')
+#     valor = valor.replace('“‘','')
+#     valor = valor.replace('”','')
+#     valor = valor.replace(')','')
+#     valor = valor.replace('(','')
+#     valor = valor.replace('‘','')
+#     # print(list(valor.strip().upper()))
+#     # print((valor.strip().upper()))
+#     valor = valor.strip().upper()
+#     palavras.append(valor)
+    
+# print(palavras)
+# # salvar = input(r'Digite Caminho para Salvar: ')
+# savetxt('apalavras.csv', palavras, delimiter=';', fmt='%s')
+
+# input('\n\033[1;31mPressione <ENTER> para continuar após renomear coluna.\033[m')
+# abrirCSV = ('apalavras.csv')
+
+# baseDados = pd.read_csv(abrirCSV, sep=';', low_memory=False, encoding='latin-1')
+# baseDados = baseDados.sort_values('COLUNA', ascending=True)
+# baseDados = baseDados.drop_duplicates(subset='COLUNA', keep='first')
+# baseDados = baseDados.reset_index(drop=True, inplace=False)
+# # baseDados.to_csv(input('Digite o nome do arquivo: ') +'.csv', sep=';', index=False, encoding='latin-1')
+# baseDados.count()
+# baseDados.to_csv(abrirCSV, sep=';', index=False, encoding='latin-1')
+
+
+# print(baseDados)
+# input('\n\033[1;31mPressione <ENTER> para sair.\033[m')
+
+
+import csv
+import re
+
+def main():
+    # Abre o arquivo de texto para leitura
+    with open('Aula_294_Texto.txt', 'r') as f:
+        text = f.read()
+
+    # Remove pontuação e transforma as letras em minúsculas
+    text = re.sub(r'[^\w\s]', '', text)  # é usada para remover a pontuação do texto
+    text = text.lower()   # é usada para transformar todas as letras em minúsculas
+
+    # Separa as palavras do texto
+    words = []
+    for word in text.split():
+        words.append(word)
+
+    # Remove as palavras repetidas
+    words = list(set(words))
+
+    # Ordena as palavras
+    words.sort()
+
+    # Abre o arquivo CSV para escrita
+    with open('apalavras.csv', 'w') as f:
+        writer = csv.writer(f)
+
+        # Escreve as palavras no arquivo CSV
+        for word in words:
+            writer.writerow([word])
+            print(word, end=' ')
+        
+        # # Escreve as palavras no arquivo CSV
+        # for i in range(0, len(words), 2):
+        #     # write 2 words per line
+        #     writer.writerow(words[i:i+2])
+
+if __name__ == '__main__':
+    main()
+
+
+print('\033[1;31mFim do programa.\033[m')
